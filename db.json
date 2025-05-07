@@ -1,0 +1,81 @@
+{
+    "prisons": [
+      {
+        "id": "p1",
+        "name": "Aqaba Central Prison",
+        "location": "Aqaba",
+        "capacity": 200,
+        "currentOccupancy": 3
+      }
+    ],
+    "officers": [
+      {
+        "id": "o1",
+        "name": "Officer Khaled", 
+        "username": "khaled123",
+        "password": "hashed-password",
+        "shift": "MORNING",
+        "role": "SUPERVISOR",
+        "prison_id": "p1"
+      }
+    ],
+    "cells": [
+      {
+        "id": "c1",
+        "number": 101,
+        "floor": "1st",
+        "capacity": 4,
+        "currentOccupancy": 2,
+        "prison_id": "p1",
+        "officer_id": "o1"
+      },
+      {
+        "id": "c2",
+        "number": 102,
+        "floor": "1st",
+        "capacity": 4,
+        "currentOccupancy": 1,
+        "prison_id": "p1",
+        "officer_id": "o1"
+      }
+    ],
+    "prisoners": [
+      {
+        "id": "pr1",
+        "number": "P1001",
+        "name": "John Doe",
+        "crime": "Theft",
+        "entryDate": "2023-01-10",
+        "duration": 5,
+        "isReleased": false,
+        "releaseDate": null,
+        "prison_id": "p1",
+        "cell_id": "c1"
+      },
+      {
+        "id": "pr2",
+        "number": "P1002",
+        "name": "Ali Ahmad",
+        "crime": "Fraud",
+        "entryDate": "2023-05-21",
+        "duration": 3,
+        "isReleased": false,
+        "releaseDate": null,
+        "prison_id": "p1",
+        "cell_id": "c1"
+      },
+      {
+        "id": "pr3",
+        "number": "P1003",
+        "name": "Salem Youssef",
+        "crime": "Assault",
+        "entryDate": "2022-09-15",
+        "duration": 7,
+        "isReleased": false,
+        "releaseDate": null,
+        "prison_id": "p1",
+        "cell_id": "c2"
+      }
+    ]
+  }
+  
