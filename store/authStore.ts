@@ -1,102 +1,70 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-
-interface User {
-    id: string;
-    username: string;
-    name?: string;
-    role: string;
+function decodeToken(token: string | null): any {
+    if (!token) return null;
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/_/g, "/").replace(/-/g, "+");
+    const jsonPayload = decodeURIComponent(
+        atob(base64)
+            .split("")
+            .map((c) => `%${`00${c.charCodeAt(0).toString(16)}`.slice(-2)}`)
+            .join("")
+    );
+    return JSON.parse(jsonPayload);
 }
 
-
 interface AuthState {
-    user: User | null;
     token: string | null;
+
     isAuthenticated: boolean;
-    isLoading: boolean;
-    error: string | null;
-
-
-    login: (username: string, password: string) => Promise<void>;
-    register: (username: string, password: string, name: string) => Promise<void>;
+    isTokenExpired: () => boolean;
+    login: (token: string) => void;
     logout: () => void;
-    clearError: () => void;
+    getUser: () => any;
 }
 
 export const useAuthStore = create<AuthState>()(
     persist(
-        (set) => ({
-            user: null,
+        (set, get) => ({
             token: null,
             isAuthenticated: false,
-            isLoading: false,
-            error: null,
 
-            login: async (username: string, password: string) => {
-                try {
-                    set({ isLoading: true, error: null });
+            isTokenExpired: () => {
+                const token = get().token;
+                if (!token) return true;
 
+                const decoded = decodeToken(token);
+                if (!decoded || !decoded.exp) return true;
 
-                    const mockUser = { id: '1', username, role: 'user' };
-                    const mockToken = 'mock-jwt-token';
-
-                    // Simulate API delay
-                    await new Promise(resolve => setTimeout(resolve, 500));
-
-                    set({
-                        user: mockUser,
-                        token: mockToken,
-                        isAuthenticated: true,
-                        isLoading: false,
-                    });
-                } catch (error) {
-                    set({
-                        isLoading: false,
-                        error: error instanceof Error ? error.message : 'Failed to login',
-                    });
-                }
+                return decoded.exp * 1000 < Date.now();
             },
 
-            register: async (username: string, password: string, name: string) => {
-                try {
-                    set({ isLoading: true, error: null });
-
-                    // will be replaced with an API call
-                    const mockUser = { id: '1', username, name, role: 'user' };
-                    const mockToken = 'mock-jwt-token';
-
-                    // Simulate API delay
-                    await new Promise(resolve => setTimeout(resolve, 500));
-
-                    set({
-                        user: mockUser,
-                        token: mockToken,
-                        isAuthenticated: true,
-                        isLoading: false,
-                    });
-                } catch (error) {
-                    set({
-                        isLoading: false,
-                        error: error instanceof Error ? error.message : 'Failed to register',
-                    });
-                }
+            login: (token: string) => {
+                set({
+                    token,
+                    isAuthenticated: true
+                });
             },
 
             logout: () => {
                 set({
-                    user: null,
                     token: null,
-                    isAuthenticated: false,
+                    isAuthenticated: false
                 });
             },
 
-            clearError: () => {
-                set({ error: null });
-            },
+            getUser: () => {
+                const token = get().token;
+                return token ? decodeToken(token) : null;
+            }
+
+
         }),
         {
             name: 'auth-storage',
+            partialize: (state) => ({ token: state.token })
         }
     )
 );
+
