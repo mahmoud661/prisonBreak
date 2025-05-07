@@ -68,7 +68,7 @@ export default function SideBar() {
         text-zinc-700 dark:text-zinc-200 shadow-xl shadow-black/5 dark:shadow-black/30 z-40 transition-all duration-300
         w-full max-w-[280px] -translate-x-full md:translate-x-0 md:w-64">
         
-        <div className="p-4 border-b border-zinc-200 dark:border-zinc-800">
+        <div className="p-4  border-zinc-200 dark:border-zinc-800">
           <div className="flex items-center space-x-2">
             <Shield className="w-6 h-6 text-red-600 flex-shrink-0" />
             <h1 className="text-xl font-bold tracking-wider text-red-600">IRON GATE</h1>

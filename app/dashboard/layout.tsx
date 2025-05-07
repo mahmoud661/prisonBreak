@@ -3,8 +3,7 @@
 import React, { useEffect } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import SideBar from "@/components/sideBar";
-import Link from "next/link";
-import { Bell, Shield, Menu } from "lucide-react";
+import {  Menu } from "lucide-react";
 
 export default function DashboardLayout({
   children,

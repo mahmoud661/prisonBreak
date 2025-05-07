@@ -8,7 +8,7 @@ import StatCard from "@/components/dashboard/StatCard";
 import OfficersTable from "@/components/dashboard/OfficersTable";
 import CellsTable from "@/components/dashboard/CellsTable";
 import {ICell} from "@/components/dashboard/CellsTable";
-// Mock data
+
 const officersData = [
   { name: "Johnson, R.", username: "johnsonr23", role: "Guard", shift: "Morning", status: "active" },
   { name: "Williams, T.", username: "williamsT", role: "Supervisor", shift: "Morning", status: "active" },
