@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 interface Officer {
   name: string;
@@ -15,13 +15,42 @@ interface OfficersTableProps {
 }
 
 export const OfficersTable: React.FC<OfficersTableProps> = ({ officers }) => {
+  const [shiftFilter, setShiftFilter] = useState<string>("all");
+  const [roleFilter, setRoleFilter] = useState<string>("all");
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [filteredOfficers, setFilteredOfficers] = useState<Officer[]>(officers);
+
+  useEffect(() => {
+    // Apply all filters
+    const filtered = officers.filter((officer) => {
+      // Apply shift filter
+      const matchesShift = shiftFilter === "all" || officer.shift.toLowerCase() === shiftFilter;
+      
+      // Apply role filter
+      const matchesRole = roleFilter === "all" || officer.role.toLowerCase() === roleFilter;
+      
+      // Apply search term filter (case insensitive)
+      const matchesSearch = searchTerm === "" || 
+        officer.name.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      return matchesShift && matchesRole && matchesSearch;
+    });
+    
+    setFilteredOfficers(filtered);
+  }, [officers, shiftFilter, roleFilter, searchTerm]);
+
   return (
     <div className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg shadow-lg p-5 mb-8">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">Officers On-Site</h3>
         <div className="flex items-center">
           <div className="relative">
-            <select aria-label="Filter by shift" className="bg-zinc-100 dark:bg-zinc-700 border border-zinc-200 dark:border-zinc-600 text-zinc-800 dark:text-zinc-200 text-sm rounded-lg px-3 py-1.5 pr-8 appearance-none focus:outline-none focus:ring-1 focus:ring-red-500">
+            <select 
+              aria-label="Filter by shift" 
+              value={shiftFilter}
+              onChange={(e) => setShiftFilter(e.target.value)}
+              className="bg-zinc-100 dark:bg-zinc-700 border border-zinc-200 dark:border-zinc-600 text-zinc-800 dark:text-zinc-200 text-sm rounded-lg px-3 py-1.5 pr-8 appearance-none focus:outline-none focus:ring-1 focus:ring-red-500"
+            >
               <option value="all">All Shifts</option>
               <option value="morning">Morning</option>
               <option value="evening">Evening</option>
@@ -32,7 +61,12 @@ export const OfficersTable: React.FC<OfficersTableProps> = ({ officers }) => {
             </div>
           </div>
           <div className="relative ml-3">
-            <select aria-label="Filter by role" className="bg-zinc-100 dark:bg-zinc-700 border border-zinc-200 dark:border-zinc-600 text-zinc-800 dark:text-zinc-200 text-sm rounded-lg px-3 py-1.5 pr-8 appearance-none focus:outline-none focus:ring-1 focus:ring-red-500">
+            <select 
+              aria-label="Filter by role" 
+              value={roleFilter}
+              onChange={(e) => setRoleFilter(e.target.value)}
+              className="bg-zinc-100 dark:bg-zinc-700 border border-zinc-200 dark:border-zinc-600 text-zinc-800 dark:text-zinc-200 text-sm rounded-lg px-3 py-1.5 pr-8 appearance-none focus:outline-none focus:ring-1 focus:ring-red-500"
+            >
               <option value="all">All Roles</option>
               <option value="guard">Guard</option>
               <option value="supervisor">Supervisor</option>
@@ -43,7 +77,14 @@ export const OfficersTable: React.FC<OfficersTableProps> = ({ officers }) => {
             </div>
           </div>
           <div className="relative ml-3">
-            <input type="text" placeholder="Search name..." aria-label="Search by name" className="bg-zinc-100 dark:bg-zinc-700 border border-zinc-200 dark:border-zinc-600 text-zinc-800 dark:text-zinc-200 text-sm rounded-lg px-3 py-1.5 w-40 focus:outline-none focus:ring-1 focus:ring-red-500" />
+            <input 
+              type="text" 
+              placeholder="Search name..." 
+              aria-label="Search by name" 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="bg-zinc-100 dark:bg-zinc-700 border border-zinc-200 dark:border-zinc-600 text-zinc-800 dark:text-zinc-200 text-sm rounded-lg px-3 py-1.5 w-40 focus:outline-none focus:ring-1 focus:ring-red-500" 
+            />
           </div>
         </div>
       </div>
@@ -59,7 +100,7 @@ export const OfficersTable: React.FC<OfficersTableProps> = ({ officers }) => {
             </tr>
           </thead>
           <tbody className="text-sm">
-            {officers.map((officer, index) => (
+            {filteredOfficers.map((officer, index) => (
               <tr key={index} className="border-b border-zinc-200/70 dark:border-zinc-700/50 last:border-0">
                 <td className="py-3 text-zinc-900 dark:text-zinc-300">{officer.name}</td>
                 <td className="py-3 font-mono text-zinc-600 dark:text-zinc-400">{officer.username}</td>
