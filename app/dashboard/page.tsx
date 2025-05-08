@@ -34,7 +34,7 @@ export default function DashboardPage() {
     <div className="container mx-auto py-6">
       <DashboardHeader 
         title="Warden Dashboard" 
-        subtitle="Iron Gate Prison Facility Management" 
+        subtitle="Prison Break Prison Facility Management" 
       />
       
       <AlertBanner 
