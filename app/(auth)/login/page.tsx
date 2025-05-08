@@ -1,8 +1,18 @@
+"use client";
 import Link from "next/link";
-import { KeyRound } from "lucide-react";
+import { KeyRound, Eye, EyeOff } from "lucide-react";
 import Header from "@/components/header";
+import { useState } from "react";
+
+//login logic goes here
 
 export default function LoginPage() {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <main
       className="min-h-screen transition-colors duration-300
@@ -41,13 +51,26 @@ export default function LoginPage() {
               >
                 Password
               </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                required
-                className="block w-full px-4 py-2 border border-zinc-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-red-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-zinc-200"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  name="password"
+                  required
+                  className="block w-full px-4 py-2 border border-zinc-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-red-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-zinc-200"
+                />
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200 focus:outline-none"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
             </div>
             <button
               type="submit"
