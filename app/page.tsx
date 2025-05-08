@@ -55,7 +55,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto mt-32 border-t border-zinc-300 dark:border-zinc-800 pt-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-zinc-600 dark:text-zinc-500 text-sm">
-              &copy; 2025 Department of Corrections | Iron Gate Maximum Security
+              &copy; 2025 Department of Corrections | Prison Break Maximum Security
               Facility
             </p>
             <div className="flex items-center text-xs text-zinc-700 dark:text-zinc-600 bg-zinc-200/80 dark:bg-zinc-900/50 px-3 py-1 rounded border border-zinc-300 dark:border-zinc-800">

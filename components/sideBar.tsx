@@ -71,7 +71,7 @@ export default function SideBar() {
         <div className="p-4  border-zinc-200 dark:border-zinc-800">
           <div className="flex items-center space-x-2">
             <Shield className="w-6 h-6 text-red-600 flex-shrink-0" />
-            <h1 className="text-xl font-bold tracking-wider text-red-600">IRON GATE</h1>
+            <h1 className="text-xl font-bold tracking-wider text-red-600">PRISON BREAK</h1>
           </div>
           <p className="text-xs text-zinc-500 mt-1">Maximum Security Facility</p>
         </div>

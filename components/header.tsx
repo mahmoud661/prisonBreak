@@ -7,7 +7,7 @@ export default function Header() {
       <div className="flex items-center">
         <Shield className="h-8 w-8 text-red-600 mr-2" />
         <h1 className="text-2xl md:text-3xl font-bold text-red-600">
-          IRON GATE
+          PRISON BREAK 
         </h1>
       </div>
       <ThemeToggle />
