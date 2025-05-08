@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Shield, ArrowRight, Lock } from "lucide-react";
+import { Shield, ArrowRight, Lock, KeyRound   } from "lucide-react";
+import Header from "@/components/header";
 
 export default function Home() {
   return (
@@ -11,15 +12,7 @@ export default function Home() {
     >
       <div className="container mx-auto px-4 py-8 md:py-16">
         {/* Header with theme toggle */}
-        <div className="flex justify-between items-center mb-16">
-          <div className="flex items-center">
-            <Shield className="h-8 w-8 text-red-600 mr-2" />
-            <h1 className="text-2xl md:text-3xl font-bold text-red-600">
-              IRON GATE
-            </h1>
-          </div>
-          <ThemeToggle />
-        </div>
+        <Header />
 
         {/* Hero section */}
         <div className="max-w-3xl mx-auto text-center mt-24 mb-16">
@@ -34,15 +27,27 @@ export default function Home() {
             protocols, and facility operations for Iron Gate Maximum Security
             Prison.
           </p>
-          <div className="space-x-4">
-            <Link
-              href="/dashboard"
-              className="inline-flex items-center px-6 py-3 bg-red-800 hover:bg-red-700 text-white rounded-md font-medium transition-colors shadow-lg shadow-red-900/50 group"
-            >
-              <Lock className="mr-2 h-5 w-5" />
-              Access Dashboard
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
+          <div className="flex justify-center space-x-4">
+            <div className="flex space-x-4">
+              <Link
+                href="/login"
+                className="inline-flex items-center px-6 py-3 bg-red-800 hover:bg-red-700 text-white rounded-md font-medium transition-colors shadow-lg shadow-red-900/50 group"
+              >
+                <KeyRound className="mr-2 h-5 w-5" />
+                Log In
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+            <div className="space-x-4">
+              <Link
+                href="/dashboard"
+                className="inline-flex items-center px-6 py-3 bg-red-800 hover:bg-red-700 text-white rounded-md font-medium transition-colors shadow-lg shadow-red-900/50 group"
+              >
+                <Lock className="mr-2 h-5 w-5" />
+                Access Dashboard
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
           </div>
         </div>
 
