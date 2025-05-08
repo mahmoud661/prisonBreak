@@ -19,7 +19,7 @@ interface AuthState {
 
     isAuthenticated: boolean;
     isTokenExpired: () => boolean;
-    login: (token: string) => void;
+    setToken: (token: string) => void;
     logout: () => void;
     getUser: () => any;
 }
@@ -40,7 +40,7 @@ export const useAuthStore = create<AuthState>()(
                 return decoded.exp * 1000 < Date.now();
             },
 
-            login: (token: string) => {
+            setToken: (token: string) => {
                 set({
                     token,
                     isAuthenticated: true

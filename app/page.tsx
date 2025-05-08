@@ -7,8 +7,8 @@ export default function Home() {
   return (
     <main
       className="min-h-screen transition-colors duration-300
-      dark:bg-[url('/prison-wall-bg.jpg')] dark:bg-cover dark:bg-center dark:bg-no-repeat dark:bg-blend-overlay dark:bg-black/90
-      bg-zinc-50 bg-[url('/prison-wall-bg.jpg')] bg-cover bg-center bg-no-repeat bg-blend-overlay bg-white/90"
+       dark:bg-cover dark:bg-center dark:bg-no-repeat dark:bg-blend-overlay dark:bg-black/90
+      bg-zinc-50  bg-cover bg-center bg-no-repeat bg-blend-overlay bg-white/90"
     >
       <div className="container mx-auto px-4 py-8 md:py-16">
         {/* Header with theme toggle */}
