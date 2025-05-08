@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Shield, ArrowRight, Lock, KeyRound   } from "lucide-react";
+import { Shield, ArrowRight, Lock, KeyRound } from "lucide-react";
 import Header from "@/components/header";
 
 export default function Home() {
@@ -27,8 +27,8 @@ export default function Home() {
             protocols, and facility operations for Iron Gate Maximum Security
             Prison.
           </p>
-          <div className="flex justify-center space-x-4">
-            <div className="flex space-x-4">
+          <div className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4">
+            <div>
               <Link
                 href="/login"
                 className="inline-flex items-center px-6 py-3 bg-red-800 hover:bg-red-700 text-white rounded-md font-medium transition-colors shadow-lg shadow-red-900/50 group"
@@ -38,7 +38,7 @@ export default function Home() {
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
-            <div className="space-x-4">
+            <div>
               <Link
                 href="/dashboard"
                 className="inline-flex items-center px-6 py-3 bg-red-800 hover:bg-red-700 text-white rounded-md font-medium transition-colors shadow-lg shadow-red-900/50 group"
@@ -55,8 +55,8 @@ export default function Home() {
         <div className="max-w-4xl mx-auto mt-32 border-t border-zinc-300 dark:border-zinc-800 pt-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-zinc-600 dark:text-zinc-500 text-sm">
-              &copy; 2025 Department of Corrections | Prison Break Maximum Security
-              Facility
+              &copy; 2025 Department of Corrections | Prison Break Maximum
+              Security Facility
             </p>
             <div className="flex items-center text-xs text-zinc-700 dark:text-zinc-600 bg-zinc-200/80 dark:bg-zinc-900/50 px-3 py-1 rounded border border-zinc-300 dark:border-zinc-800">
               <span className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
