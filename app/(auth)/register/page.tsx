@@ -105,7 +105,7 @@ export default function LoginPage() {
               className="w-full px-4 py-2 bg-red-800 hover:bg-red-700 text-white rounded-md font-medium transition-colors shadow-lg shadow-red-900/50 group flex items-center justify-center space-x-2"
             >
               <KeyRound className="h-5 w-5 mr-3" />
-              Log In
+              Register
             </button>
           </form>
           <div className="mt-4 text-center">
