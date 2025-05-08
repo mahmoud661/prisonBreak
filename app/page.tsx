@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Shield, ArrowRight, Lock, KeyRound   } from "lucide-react";
+import { Shield, ArrowRight, Lock, KeyRound } from "lucide-react";
 import Header from "@/components/header";
 
 export default function Home() {
   return (
     <main
       className="min-h-screen transition-colors duration-300
-      dark:bg-[url('/prison-wall-bg.jpg')] dark:bg-cover dark:bg-center dark:bg-no-repeat dark:bg-blend-overlay dark:bg-black/90
-      bg-zinc-50 bg-[url('/prison-wall-bg.jpg')] bg-cover bg-center bg-no-repeat bg-blend-overlay bg-white/90"
+       dark:bg-cover dark:bg-center dark:bg-no-repeat dark:bg-blend-overlay dark:bg-black/90
+      bg-zinc-50  bg-cover bg-center bg-no-repeat bg-blend-overlay bg-white/90"
     >
       <div className="container mx-auto px-4 py-8 md:py-16">
         {/* Header with theme toggle */}
@@ -55,8 +55,8 @@ export default function Home() {
         <div className="max-w-4xl mx-auto mt-32 border-t border-zinc-300 dark:border-zinc-800 pt-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-zinc-600 dark:text-zinc-500 text-sm">
-              &copy; 2025 Department of Corrections | Prison Break Maximum Security
-              Facility
+              &copy; 2025 Department of Corrections | Prison Break Maximum
+              Security Facility
             </p>
             <div className="flex items-center text-xs text-zinc-700 dark:text-zinc-600 bg-zinc-200/80 dark:bg-zinc-900/50 px-3 py-1 rounded border border-zinc-300 dark:border-zinc-800">
               <span className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>

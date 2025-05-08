@@ -1,13 +1,60 @@
 "use client";
 import Link from "next/link";
-import { KeyRound, Eye, EyeOff } from "lucide-react";
+import { KeyRound, Eye, EyeOff, X } from "lucide-react";
 import Header from "@/components/header";
 import { useState } from "react";
+import { useAuthStore } from "@/store/authStore";
 
 //register logic goes here
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string | null>(null);
+  const [password, setPassword] = useState<string | null>(null);
+  const [confirmPassword, setConfirmPassword] = useState<string | null>(null);
+
+  function handleCloseMessage() {
+    setShowErrorMessage(false);
+  }
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      setShowErrorMessage(true);
+      return;
+    }
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userName, password }),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Register failed");
+      }
+
+      const token = await res.json();
+      const { setToken } = useAuthStore.getState();
+      setToken(token);
+      setLoading(false);
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "Register failed");
+    } finally {
+      setLoading(false);
+      setShowErrorMessage(true);
+    }
+  }
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -25,10 +72,11 @@ export default function LoginPage() {
 
         {/* Login form section */}
         <div className="max-w-md mx-auto bg-white dark:bg-zinc-800 rounded-lg shadow-lg p-8">
+          {" "}
           <h2 className="text-2xl font-bold text-center text-zinc-900 dark:text-zinc-100 mb-6">
-            Registeration
+            Registration
           </h2>
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label
                 htmlFor="username"
@@ -41,6 +89,8 @@ export default function LoginPage() {
                 id="username"
                 name="username"
                 required
+                value={userName || ""}
+                onChange={(e) => setUserName(e.target.value)}
                 className="block w-full px-4 py-2 border border-zinc-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-red-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-zinc-200"
               />
             </div>
@@ -57,6 +107,8 @@ export default function LoginPage() {
                   id="password"
                   name="password"
                   required
+                  value={password || ""}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="block w-full px-4 py-2 border border-zinc-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-red-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-zinc-200"
                 />
                 <button
@@ -71,10 +123,10 @@ export default function LoginPage() {
                   )}
                 </button>
               </div>
-            </div>
+            </div>{" "}
             <div>
               <label
-                htmlFor="password"
+                htmlFor="confirm-password"
                 className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1"
               >
                 Confirm Password
@@ -85,6 +137,8 @@ export default function LoginPage() {
                   id="confirm-password"
                   name="confirm-password"
                   required
+                  value={confirmPassword || ""}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                   className="block w-full px-4 py-2 border border-zinc-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-red-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-zinc-200"
                 />
                 <button
@@ -104,9 +158,37 @@ export default function LoginPage() {
               type="submit"
               className="w-full px-4 py-2 bg-red-800 hover:bg-red-700 text-white rounded-md font-medium transition-colors shadow-lg shadow-red-900/50 group flex items-center justify-center space-x-2"
             >
+              {" "}
               <KeyRound className="h-5 w-5 mr-3" />
-              Log In
+              Register
             </button>
+            {error && showErrorMessage && (
+              <div className="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-md flex justify-between items-center">
+                <p className="flex items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 mr-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                    />
+                  </svg>
+                  {error}
+                </p>
+                <button
+                  onClick={handleCloseMessage}
+                  className="ml-4 p-1 hover:bg-red-200 rounded-full"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+            )}
           </form>
           <div className="mt-4 text-center">
             <p className="text-sm text-zinc-600 dark:text-zinc-400">
