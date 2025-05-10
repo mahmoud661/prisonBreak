@@ -27,8 +27,8 @@ export default function Home() {
             protocols, and facility operations for Iron Gate Maximum Security
             Prison.
           </p>
-          <div className="flex justify-center space-x-4">
-            <div className="flex space-x-4">
+          <div className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4">
+            <div>
               <Link
                 href="/login"
                 className="inline-flex items-center px-6 py-3 bg-red-800 hover:bg-red-700 text-white rounded-md font-medium transition-colors shadow-lg shadow-red-900/50 group"
@@ -38,7 +38,7 @@ export default function Home() {
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
-            <div className="space-x-4">
+            <div>
               <Link
                 href="/dashboard"
                 className="inline-flex items-center px-6 py-3 bg-red-800 hover:bg-red-700 text-white rounded-md font-medium transition-colors shadow-lg shadow-red-900/50 group"
