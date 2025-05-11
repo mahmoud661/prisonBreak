@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import InfoModal from "@/components/dashboard/InfoModal";
 
 interface Prisoner {
   id: string;
@@ -23,10 +24,11 @@ export const PrisonersTable: React.FC<PrisonersTableProps> = ({
   prisoners,
 }) => {
   const [crimeFilter, setCrimeFilter] = useState<string>("all");
-  const [releaseStatusFilter, setReleaseStatusFilter] = useState<string>("all");
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [releaseStatusFilter, setReleaseStatusFilter] = useState<string>("all");  const [searchTerm, setSearchTerm] = useState<string>("");
   const [filteredPrisoners, setFilteredPrisoners] =
     useState<Prisoner[]>(prisoners);
+  const infoModalRef = useRef<any>(null);
+  const [selectedPrisoner, setSelectedPrisoner] = useState<Prisoner | null>(null);
 
   useEffect(() => {
     const filtered = prisoners.filter((prisoner) => {
@@ -49,7 +51,6 @@ export const PrisonersTable: React.FC<PrisonersTableProps> = ({
 
     setFilteredPrisoners(filtered);
   }, [prisoners, crimeFilter, releaseStatusFilter, searchTerm]);
-
   const calculateRemainingTime = (
     entryDate: string,
     duration: number,
@@ -75,6 +76,12 @@ export const PrisonersTable: React.FC<PrisonersTableProps> = ({
     } else {
       return `${remainingMonths}m ${remainingDays % 30}d`;
     }
+  };
+
+  const handleRowClick = (prisoner: Prisoner) => {
+    // Set the selected prisoner and open the info modal
+    setSelectedPrisoner(prisoner);
+    infoModalRef.current?.showModal(prisoner);
   };
 
   return (
@@ -153,12 +160,18 @@ export const PrisonersTable: React.FC<PrisonersTableProps> = ({
               <th className="pb-3 text-left font-medium">REMAINING</th>
               <th className="pb-3 text-left font-medium">STATUS</th>
             </tr>
-          </thead>
-          <tbody className="text-sm">
+          </thead>          <tbody className="text-sm">
             {filteredPrisoners.map((prisoner) => (
               <tr
                 key={prisoner.id}
-                className="border-b border-zinc-200/70 dark:border-zinc-700/50 last:border-0"
+                className="border-b border-zinc-200/70 dark:border-zinc-700/50 last:border-0 hover:bg-zinc-50 dark:hover:bg-zinc-700/50 cursor-pointer"
+                onClick={() => handleRowClick(prisoner)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleRowClick(prisoner);
+                  }
+                }}
+                tabIndex={0}
               >
                 <td className="py-3 font-mono text-zinc-600 dark:text-zinc-400">
                   {prisoner.number}
@@ -196,8 +209,9 @@ export const PrisonersTable: React.FC<PrisonersTableProps> = ({
               </tr>
             ))}
           </tbody>
-        </table>
-      </div>
+        </table>      </div>
+      {/* Info Modal for displaying prisoner details */}
+      <InfoModal ref={infoModalRef} title="Prisoner Details" />
     </div>
   );
 };
